@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Droid OS</title>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        /* Your custom styles here */
+        *:not(style, head),
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background: url('https://www.bing.com/images/blob?bcid=SJn339shiK0Gh0Bb1wpJI1BpNdzV.....3Y') no-repeat center center fixed;
+            background-size: cover;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: "Figtree", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            font-size: 110%;
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+            padding: 50px 20px;
+            overflow: visible;
+        }
+
+        .swiper-slide {
+            position: relative;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            background-color: rgba(102, 102, 102, 0.8);
+            border-radius: 7px;
+            padding: 10px;
+            margin: 0;
+            cursor: grab;
+            user-select: none;
+            text-wrap: pretty;
+            transition: background 0.3s ease;
+        }
+
+        .swiper-slide:hover,
+        .swiper-slide:active {
+            background: linear-gradient(135deg, #0b662b, #0b662b 40%, rgba(255, 255, 255, 0) 40%);
+        }
+
+        .swiper-slide::before {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 80px;
+            height: 80px;
+            border-bottom: 1px dashed white;
+            border-right: 1px solid white;
+            border-radius: 0 0 7px 0;
+            content: "";
+            transition: all 0.3s ease;
+        }
+
+        .swiper-slide::after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            border-top: 1px solid white;
+            border-left: 1px dashed white;
+            border-radius: 7px 0 0 0;
+            content: "";
+            transition: all 0.3s ease;
+        }
+
+        .swiper-slide:hover::before,
+        .swiper-slide:hover::after,
+        .swiper-slide:active::before,
+        .swiper-slide:active::after {
+            width: 170px;
+            height: 170px;
+            transition: all 0.3s ease;
+        }
+
+        .swiper-slide .cardPopout {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 7px;
+            padding: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+
+        .swiper-slide h2 {
+            font-size: 200%;
+            line-height: 110%;
+            margin: 0 0 7px 0;
+            color: white;
+            font-family: "Nabla", system-ui;
+            font-variation-settings: "EDPT" 100, "EHLT" 24;
+            background-color: #111;
+            border-radius: 100%;
+        }
+
+        .swiper-slide h4 {
+            font-size: 110%;
+            line-height: 120%;
+            font-weight: 700;
+            margin: 0 0 13px 0;
+            color: #bbb;
+            font-style: italic;
+        }
+
+        .swiper-slide figcaption {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            margin: 0 0 20px 0;
+            padding-left: 20px;
+            border-left: 1px solid white;
+        }
+
+        .swiper-slide figcaption p {
+            color: #999;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .swiper-slide a {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: black;
+            color: white;
+            border-radius: 3px;
+            text-decoration: none;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.6s ease !important;
+        }
+
+        .swiper-slide a:hover {
+            color: black;
+        }
+
+        .swiper-slide a::after {
+            position: absolute;
+            right: 100%;
+            bottom: 0;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: #ff00ff;
+            z-index: -1;
+            transition: all 0.6s ease !important;
+        }
+
+        .swiper-slide a:hover::after {
+            right: 0;
+            transition: all 0.6s ease !important;
+        }
+
+        /* Taskbar Styles */
+        .taskbar {
+            display: flex;
+            justify-content: flex-end;
+            height: 40px;
+            background-color: #333;
+            padding: 5px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        .taskbar-title {
+            color: white;
+            margin-right: auto;
+            padding: 0 10px;
+        }
+
+        .clock {
+            margin-left: auto;
+            color: white;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" id="photosWindow">
+                <div class="cardPopout">
+                    <img src="photos_icon.png" alt="Photos">
+                    <h2>Photos</h2>
+                    <h4>View and manage your photos.</h4>
+                    <figcaption>
+                        <p>Organize and share your memories with ease.</p>
+                        <a href="#" onclick="document.getElementById('photosUpload').click()">Upload</a>
+                    </figcaption>
+                </div>
+            </div>
+            <div class="swiper-slide" id="musicWindow">
+                <div class="cardPopout">
+                    <img src="music_icon.png" alt="Music">
+                    <h2>Music</h2>
+                    <h4>Listen to your favorite tunes.</h4>
+                    <figcaption>
+                        <p>Discover new music and create playlists.</p>
+                        <a href="#" onclick="document.getElementById('musicUpload').click()">Upload</a>
+                    </figcaption>
+                </div>
+            </div>
+            <div class="swiper-slide" id="videosWindow">
+                <div class="cardPopout">
+                    <img src="videos_icon.png" alt="Videos">
+                    <h2>Videos</h2>
+                    <h4>Watch and share videos.</h4>
+                    <figcaption>
+                        <p>Stream movies, shows, and home videos.</p>
+                        <a href="#" onclick="document.getElementById('videosUpload').click()">Upload</a>
+                        <button onclick="shareVideo()">Share</button>
+                    </figcaption>
+                </div>
+            </div>
+            <div class="swiper-slide" id="gamesWindow">
+                <div class="cardPopout">
+                    <img src="https://www.bing.com/images/blob?bcid=SNORuwOtW60Gh0Bb1wpJI1BpNdzV.....3I" alt="Games Image">
+                    <h2>Games</h2>
+                    <h4>Click the button below to open a new tab.</h4>
+                    <figcaption>
+                        <p>This is a new window for games.</p>
+                        <a href="https://hgalactic-mayhem-neon-skies.tiiny.site" target="_blank">Open</a>
+                    </figcaption>
+                </div>
+            </div>
+            <!-- Add more swiper slides as needed -->
+        </div>
+        <!-- Add scrollbar -->
+        <div class="swiper-scrollbar"></div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="taskbar-title">Droid OS</div>
+        <div class="clock">12:00 PM</div>
+    </div>
+
+    <!-- File upload inputs (hidden) -->
+    <input type="file" id="photosUpload" style="display: none;" accept="image/*" onchange="uploadFile(this.files, 'photosWindow')">
+    <input type="file" id="musicUpload" style="display: none;" accept="audio/*" onchange="uploadFile(this.files, 'musicWindow')">
+    <input type="file" id="videosUpload" style="display: none;" accept="video/*" onchange="uploadFile(this.files, 'videosWindow')">
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        var swiper = new Swiper('.swiper-container', {
+            direction: 'horizontal',
+            loop: false,
+            speed: 1500,
+            slidesPerView: 3,
+            spaceBetween: 20,
+            mousewheel: true,
+            parallax: true,
+            centeredSlides: true,
+            effect: 'coverflow',
+            coverflowEffect: {
+                rotate: 40,
+                slideShadows: true
+            },
+            autoplay: {
+                delay: 2000,
+                pauseOnMouseEnter: true
+            },
+            scrollbar: {
+                el: '.swiper-scrollbar'
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                }
+            }
+        });
+
+        // Function to handle file uploads
+        function uploadFile(files, windowId) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var imageUrl = event.target.result;
+                var window = document.getElementById(windowId);
+                var imgElement = window.querySelector('img');
+                imgElement.src = imageUrl;
+            };
+            reader.readAsDataURL(files[0]);
+        }
+
+        // Function to share video
+        function shareVideo() {
+            var videoWindow = document.getElementById('videosWindow');
+            var videoSrc = videoWindow.querySelector('img').src;
+            if (videoSrc) {
+                alert('Video shared: ' + videoSrc);
+            } else {
+                alert('No video uploaded yet.');
+            }
+        }
+    </script>
+</body>
+</html>
