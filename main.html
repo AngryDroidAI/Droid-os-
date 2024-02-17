@@ -35,7 +35,7 @@
 
         .swiper-container {
             width: 100%;
-            height: 100%;
+            height: 80%;
             padding: 50px 20px;
             overflow: visible;
         }
@@ -179,10 +179,11 @@
         /* Taskbar Styles */
         .taskbar {
             display: flex;
-            justify-content: flex-end;
-            height: 40px;
+            justify-content: space-between;
+            align-items: center;
+            height: 10%;
             background-color: #333;
-            padding: 5px;
+            padding: 5px 20px;
             position: fixed;
             bottom: 0;
             left: 0;
@@ -193,21 +194,44 @@
         .taskbar-title {
             color: white;
             margin-right: auto;
-            padding: 0 10px;
         }
 
         .clock {
-            margin-left: auto;
             color: white;
-            padding-right: 10px;
+        }
+
+        .url-input-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .url-input {
+            flex: 1;
+            margin-right: 10px;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .generate-window-button {
+            padding: 5px 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .generate-window-button:hover {
+            background-color: darkgreen;
         }
     </style>
 </head>
 <body>
-    <!-- URL Input Field and Button -->
-    <div style="margin-bottom: 20px;">
-        <input type="text" id="urlInput" placeholder="Enter URL">
-        <button id="addUrlButton">Add URL</button>
+    <!-- URL Input Container -->
+    <div class="url-input-container">
+        <input type="text" class="url-input" id="urlInput" placeholder="Enter URL">
+        <button class="generate-window-button" onclick="generateWindow()">Generate Window</button>
     </div>
 
     <!-- Swiper -->
@@ -279,36 +303,6 @@
             }
         });
 
-        // Add URL Button click event
-        document.getElementById('addUrlButton').addEventListener('click', function() {
-            var urlInput = document.getElementById('urlInput').value;
-            if (urlInput.trim() !== '') {
-                addUrlWindow(urlInput.trim());
-                document.getElementById('urlInput').value = ''; // Reset input field
-            }
-        });
-
-        // Function to add URL window
-        function addUrlWindow(url) {
-            var swiperWrapper = document.querySelector('.swiper-wrapper');
-            var newSlide = document.createElement('div');
-            newSlide.className = 'swiper-slide';
-            var newWindowId = 'urlWindow_' + Math.random().toString(36).substr(2, 9);
-            newSlide.id = newWindowId;
-            newSlide.innerHTML = `
-                <div class="cardPopout">
-                    <h2>Custom Window</h2>
-                    <h4>${url}</h4>
-                    <figcaption>
-                        <p>This window was generated from the provided URL.</p>
-                        <a href="${url}" target="_blank">Open</a>
-                    </figcaption>
-                </div>
-            `;
-            swiperWrapper.appendChild(newSlide);
-            swiper.update(); // Update Swiper instance
-        }
-
         // Function to handle file uploads
         function uploadFile(files, windowId) {
             var reader = new FileReader();
@@ -326,6 +320,34 @@
                 alert('Please select an image file.');
                 return;
             }
+        }
+
+        // Function to generate window with URL
+        function generateWindow() {
+            var urlInput = document.getElementById('urlInput').value.trim();
+            if (urlInput === '') {
+                alert('Please enter a URL.');
+                return;
+            }
+
+            var swiperWrapper = document.querySelector('.swiper-wrapper');
+            var newSlide = document.createElement('div');
+            newSlide.className = 'swiper-slide';
+            newSlide.innerHTML = `
+                <div class="cardPopout">
+                    <img src="window_icon.png" alt="Window">
+                    <h2>Window</h2>
+                    <h4>URL: ${urlInput}</h4>
+                    <figcaption>
+                        <p>This is a new window generated from the URL.</p>
+                        <a href="${urlInput}" target="_blank">Open</a>
+                    </figcaption>
+                </div>
+            `;
+            swiperWrapper.appendChild(newSlide);
+
+            // Clear the URL input field after generating window
+            document.getElementById('urlInput').value = '';
         }
     </script>
 </body>
