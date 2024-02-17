@@ -202,31 +202,11 @@
             color: white;
             padding-right: 10px;
         }
-
-        /* URL input and button styles */
-        #urlInput {
-            margin-bottom: 10px;
-            padding: 5px;
-        }
-
-        #addUrlButton {
-            padding: 5px 10px;
-            background-color: black;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #addUrlButton:hover {
-            background-color: green;
-        }
     </style>
 </head>
 <body>
-    <!-- URL input and button -->
-    <div>
+    <!-- URL Input Field and Button -->
+    <div style="margin-bottom: 20px;">
         <input type="text" id="urlInput" placeholder="Enter URL">
         <button id="addUrlButton">Add URL</button>
     </div>
@@ -245,17 +225,6 @@
                     </figcaption>
                 </div>
             </div>
-            <div class="swiper-slide" id="gamesWindow">
-                <div class="cardPopout">
-                    <img src="https://www.bing.com/images/blob?bcid=SNORuwOtW60Gh0Bb1wpJI1BpNdzV.....3I" alt="Games Image">
-                    <h2>Games</h2>
-                    <h4>Click the button below to open a new tab.</h4>
-                    <figcaption>
-                        <p>This is a new window for games.</p>
-                        <a href="https://hgalactic-mayhem-neon-skies.tiiny.site" target="_blank">Open</a>
-                    </figcaption>
-                </div>
-            </div>
         </div>
         <!-- Add scrollbar -->
         <div class="swiper-scrollbar"></div>
@@ -269,8 +238,6 @@
 
     <!-- File upload inputs (hidden) -->
     <input type="file" id="photosUpload" style="display: none;" accept="image/*" onchange="uploadFile(this.files, 'photosWindow')">
-    <input type="file" id="musicUpload" style="display: none;" accept="audio/*" onchange="uploadFile(this.files, 'musicWindow')">
-    <input type="file" id="videosUpload" style="display: none;" accept="video/*" onchange="uploadFile(this.files, 'videosWindow')">
 
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -313,6 +280,36 @@
             }
         });
 
+        // Add URL Button click event
+        document.getElementById('addUrlButton').addEventListener('click', function() {
+            var urlInput = document.getElementById('urlInput').value;
+            if (urlInput.trim() !== '') {
+                addUrlWindow(urlInput.trim());
+                document.getElementById('urlInput').value = ''; // Reset input field
+            }
+        });
+
+        // Function to add URL window
+        function addUrlWindow(url) {
+            var swiperWrapper = document.querySelector('.swiper-wrapper');
+            var newSlide = document.createElement('div');
+            newSlide.className = 'swiper-slide';
+            var newWindowId = 'urlWindow_' + Math.random().toString(36).substr(2, 9);
+            newSlide.id = newWindowId;
+            newSlide.innerHTML = `
+                <div class="cardPopout">
+                    <h2>Custom Window</h2>
+                    <h4>${url}</h4>
+                    <figcaption>
+                        <p>This window was generated from the provided URL.</p>
+                        <a href="${url}" target="_blank">Open</a>
+                    </figcaption>
+                </div>
+            `;
+            swiperWrapper.appendChild(newSlide);
+            swiper.update(); // Update Swiper instance
+        }
+
         // Function to handle file uploads
         function uploadFile(files, windowId) {
             var reader = new FileReader();
@@ -331,30 +328,6 @@
                 return;
             }
         }
-
-        // Function to add a new window with the entered URL
-        document.getElementById('addUrlButton').addEventListener('click', function() {
-            var url = document.getElementById('urlInput').value;
-            if (!url) {
-                alert('Please enter a URL.');
-                return;
-            }
-            var swiperWrapper = document.querySelector('.swiper-wrapper');
-            var newSlide = document.createElement('div');
-            newSlide.className = 'swiper-slide';
-            var newWindowId = 'window' + Math.floor(Math.random() * 1000); // Generate a unique ID for the window
-            newSlide.id = newWindowId;
-            newSlide.innerHTML = `
-                <div class="cardPopout">
-                    <h2>Window</h2>
-                    <h4>URL: ${url}</h4>
-                    <a href="${url}" target="_blank">Open</a>
-                </div>
-            `;
-            swiperWrapper.appendChild(newSlide);
-            swiper.update(); // Update swiper to reflect the newly added slide
-            document.getElementById('urlInput').value = ''; // Clear the input field
-        });
     </script>
 </body>
 </html>
