@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -201,9 +202,35 @@
             color: white;
             padding-right: 10px;
         }
+
+        /* URL input and button styles */
+        #urlInput {
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        #addUrlButton {
+            padding: 5px 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #addUrlButton:hover {
+            background-color: green;
+        }
     </style>
 </head>
 <body>
+    <!-- URL input and button -->
+    <div>
+        <input type="text" id="urlInput" placeholder="Enter URL">
+        <button id="addUrlButton">Add URL</button>
+    </div>
+
     <!-- Swiper -->
     <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -218,17 +245,6 @@
                     </figcaption>
                 </div>
             </div>
-            <div class="swiper-slide" id="duckduckgoWindow" onclick="openDuckDuckGo()">
-                <div class="cardPopout">
-                    <img src="duckduckgo_icon.png" alt="DuckDuckGo">
-                    <h2>DuckDuckGo</h2>
-                    <h4>Search the web privately.</h4>
-                    <figcaption>
-                        <p>Get instant answers and anonymous browsing.</p>
-                        <a href="https://duckduckgo.com" target="_blank">Open DuckDuckGo</a>
-                    </figcaption>
-                </div>
-            </div>
             <div class="swiper-slide" id="gamesWindow">
                 <div class="cardPopout">
                     <img src="https://www.bing.com/images/blob?bcid=SNORuwOtW60Gh0Bb1wpJI1BpNdzV.....3I" alt="Games Image">
@@ -240,7 +256,6 @@
                     </figcaption>
                 </div>
             </div>
-            <!-- Add more swiper slides as needed -->
         </div>
         <!-- Add scrollbar -->
         <div class="swiper-scrollbar"></div>
@@ -317,21 +332,29 @@
             }
         }
 
-        // Function to share video
-        function shareVideo() {
-            var videoWindow = document.getElementById('videosWindow');
-            var videoSrc = videoWindow.querySelector('img').src;
-            if (videoSrc) {
-                alert('Video shared: ' + videoSrc);
-            } else {
-                alert('No video uploaded yet.');
+        // Function to add a new window with the entered URL
+        document.getElementById('addUrlButton').addEventListener('click', function() {
+            var url = document.getElementById('urlInput').value;
+            if (!url) {
+                alert('Please enter a URL.');
+                return;
             }
-        }
-
-        // Function to open DuckDuckGo window
-        function openDuckDuckGo() {
-            window.open('https://duckduckgo.com', '_blank');
-        }
+            var swiperWrapper = document.querySelector('.swiper-wrapper');
+            var newSlide = document.createElement('div');
+            newSlide.className = 'swiper-slide';
+            var newWindowId = 'window' + Math.floor(Math.random() * 1000); // Generate a unique ID for the window
+            newSlide.id = newWindowId;
+            newSlide.innerHTML = `
+                <div class="cardPopout">
+                    <h2>Window</h2>
+                    <h4>URL: ${url}</h4>
+                    <a href="${url}" target="_blank">Open</a>
+                </div>
+            `;
+            swiperWrapper.appendChild(newSlide);
+            swiper.update(); // Update swiper to reflect the newly added slide
+            document.getElementById('urlInput').value = ''; // Clear the input field
+        });
     </script>
 </body>
 </html>
